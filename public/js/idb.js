@@ -8,3 +8,18 @@ request.onupgradeneeded = function(e) {
     // create object store
     db.createObjectStore('new_transaction', { autoIncrement: true });
 };
+
+request.onsuccess = function(e) {
+    db = e.target.result;
+
+    // check to see if app is connected to the internet
+    if(navigator.onLine) {
+        // if connected, upload data
+        uploadTransaction();
+    }
+};
+
+// trigger if there's an issue with the database
+request.onerror = function(e) {
+    console.log(e.target.errorCode);
+};
