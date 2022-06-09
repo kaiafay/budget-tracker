@@ -23,3 +23,13 @@ request.onsuccess = function(e) {
 request.onerror = function(e) {
     console.log(e.target.errorCode);
 };
+
+// save transaction if no internet connection exists
+function saveRecord(record) {
+    // open new transaction
+    const transaction = db.transaction(['new_transaction'], 'readwrite');
+    // access object store for 'new_transaction'
+    const transactionObjectStore = transaction.objectStore('new_transaction');
+    // add record to object store
+    transactionObjectStore.add(record);
+};
